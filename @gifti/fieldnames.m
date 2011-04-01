@@ -7,7 +7,7 @@ function names = fieldnames(this)
 % Copyright (C) 2008 Wellcome Trust Centre for Neuroimaging
 
 % Guillaume Flandin
-% $Id: fieldnames.m 9 2008-05-27 12:20:41Z guillaume $
+% $Id: fieldnames.m 2076 2008-09-10 12:34:08Z guillaume $
 
 if numel(this) > 1, warning('Only handle scalar objects yet.'); end
 

@@ -26,8 +26,8 @@ if ~strcmp(xml_get(t,xml_root(t),'name'),'GIFTI')
     error('[GIFTI] %s is not a GIFTI 1.0 file.', filename);
 end
 attr = cell2mat(xml_attributes(t,'get',xml_root(t)));
-attr = cell2struct({attr.val},{attr.key},2);
-if ~isempty(setxor(fieldnames(attr),{'Version','NumberOfDataArrays'}))
+attr = cell2struct({attr.val},strrep({attr.key},':','___'),2);
+if ~all(ismember({'Version','NumberOfDataArrays'},fieldnames(attr)))
     error('[GIFTI] Missing mandatory attributes for GIFTI root element.');
 end
 if str2double(attr.Version) ~= 1

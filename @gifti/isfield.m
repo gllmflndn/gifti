@@ -8,6 +8,6 @@ function tf = isfield(this,field)
 % Copyright (C) 2008 Wellcome Trust Centre for Neuroimaging
 
 % Guillaume Flandin
-% $Id: isfield.m 8 2008-05-12 09:53:02Z guillaume $
+% $Id: isfield.m 2076 2008-09-10 12:34:08Z guillaume $
 
 tf = ismember(field, fieldnames(this));

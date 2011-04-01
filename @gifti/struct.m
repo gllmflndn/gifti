@@ -7,7 +7,7 @@ function s = struct(this)
 % Copyright (C) 2008 Wellcome Trust Centre for Neuroimaging
 
 % Guillaume Flandin
-% $Id: struct.m 8 2008-05-12 09:53:02Z guillaume $
+% $Id: struct.m 2076 2008-09-10 12:34:08Z guillaume $
 
 names = fieldnames(this);
 values = cell(length(names), length(this(:)));

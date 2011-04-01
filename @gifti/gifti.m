@@ -8,7 +8,7 @@ function this = gifti(varargin)
 % Copyright (C) 2008 Wellcome Trust Centre for Neuroimaging
 
 % Guillaume Flandin
-% $Id: gifti.m 8 2008-05-12 09:53:02Z guillaume $
+% $Id: gifti.m 3999 2010-07-19 10:54:18Z guillaume $
 
 switch nargin
     
@@ -21,8 +21,8 @@ switch nargin
             this = varargin{1};
             
         elseif isstruct(varargin{1})
-            f       = {'faces', 'face',  'vertices', 'vert',     'cdata'};
-            ff      = {'faces', 'faces', 'vertices', 'vertices', 'cdata'};
+            f       = {'faces', 'face', 'tri' 'vertices', 'vert', 'pnt', 'cdata'};
+            ff      = {'faces', 'faces', 'faces', 'vertices', 'vertices', 'vertices', 'cdata'};
             [c, ia] = intersect(f,fieldnames(varargin{1}));
             if ~isempty(c)
                 this = gifti;
@@ -37,6 +37,14 @@ switch nargin
             else
                 error('[GIFTI] Invalid structure.');
             end
+            
+        elseif ishandle(varargin{1})
+            this = struct('vertices',get(varargin{1},'Vertices'), ...
+                          'faces',   get(varargin{1},'Faces'));
+            if ~isempty(get(varargin{1},'FaceVertexCData'));
+                  this.cdata = get(varargin{1},'FaceVertexCData');
+            end
+            this = gifti(this);
             
         elseif isnumeric(varargin{1})
             this = gifti;
