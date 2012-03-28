@@ -7,7 +7,7 @@ function this = read_gifti_file(filename, this)
 % Copyright (C) 2008 Wellcome Trust Centre for Neuroimaging
 
 % Guillaume Flandin
-% $Id: read_gifti_file.m 4013 2010-07-22 17:12:45Z guillaume $
+% $Id: read_gifti_file.m 4612 2012-01-08 11:54:26Z guillaume $
 
 % Import XML-based GIfTI file
 %--------------------------------------------------------------------------
@@ -64,11 +64,26 @@ end
 
 %==========================================================================
 function s = gifti_LabelTable(t,uid)
-s = struct('name',{}, 'index',[]);
+s = struct('name',{}, 'key',[], 'rgba',[]);
 c = children(t,uid);
 for i=1:length(c)
     a = attributes(t,'get',c(i));
-    s(1).index(i) = str2double(a.val);
+    s(1).rgba(i,1:4) = NaN;
+    for j=1:numel(a)
+        switch lower(a{j}.key)
+            case {'key','index'}
+                s(1).key(i)    = str2double(a{j}.val);
+            case 'red'
+                s(1).rgba(i,1) = str2double(a{j}.val);
+            case 'green'
+                s(1).rgba(i,2) = str2double(a{j}.val);
+            case 'blue'
+                s(1).rgba(i,3) = str2double(a{j}.val);
+            case 'alpha'
+                s(1).rgba(i,4) = str2double(a{j}.val);
+            otherwise
+        end
+    end
     s(1).name{i}  = get(t,children(t,c(i)),'value');
 end
 
@@ -90,10 +105,10 @@ for i=1:str2double(s(1).attributes.Dimensionality)
     s(1).attributes = rmfield(s(1).attributes,f);
 end
 s(1).attributes = rmfield(s(1).attributes,'Dimensionality');
-try
+if isfield(s(1).attributes,'ExternalFileName') && ...
+        ~isempty(s(1).attributes.ExternalFileName)
     s(1).attributes.ExternalFileName = fullfile(fileparts(filename),...
         s(1).attributes.ExternalFileName);
-catch
 end
     
 c = children(t,uid);
@@ -149,14 +164,23 @@ switch s.Encoding
         d = typecast(dunzip(sb(base64decode(get(t,children(t,uid),'value')))), tp.cast);
 
     case 'ExternalFileBinary'
-        fid = fopen(s.ExternalFileName,'r');
-        if fid == -1
-            error('[GIFTI] Unable to read binary file %s.',s.ExternalFileName);
+        [p,f,e] = fileparts(s.ExternalFileName);
+        if isempty(p)
+            s.ExternalFileName = fullfile(pwd,[f e]);
         end
-        fseek(fid,str2double(s.ExternalFileOffset),0);
-        d = sb(fread(fid,prod(s.Dim),['*' tp.class]));
-        fclose(fid);
-
+        if true
+            fid = fopen(s.ExternalFileName,'r');
+            if fid == -1
+                error('[GIFTI] Unable to read binary file %s.',s.ExternalFileName);
+            end
+            fseek(fid,str2double(s.ExternalFileOffset),0);
+            d = sb(fread(fid,prod(s.Dim),['*' tp.class]));
+            fclose(fid);
+        else
+            d = file_array(s.ExternalFileName, s.Dim, tp.class, ...
+                str2double(s.ExternalFileOffset),1,0,'ro');
+        end
+        
     otherwise
         error('[GIFTI] Unknown data encoding: %s.',s.Encoding);
 end

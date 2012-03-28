@@ -1,7 +1,7 @@
- GIfTI - a MATLAB GIfTI Library (v1.1)
+ GIfTI - a MATLAB GIfTI Library (v1.2)
  =====================================
 
- Copyright (C) 2008-2011 Guillaume Flandin <Guillaume@artefact.tk>
+ Copyright (C) 2008-2012 Guillaume Flandin <Guillaume@artefact.tk>
  http://www.artefact.tk/software/matlab/gifti/
 
  This MATLAB class allows to handle GIfTI Geometry file format from the 
@@ -77,4 +77,4 @@
  -------------------------------------------------------------------------------
  MATLAB is a Registered Trademark of The Mathworks, Inc.
  
- Copyright (C) 2008-2011 Guillaume Flandin <Guillaume@artefact.tk>
+ Copyright (C) 2008-2012 Guillaume Flandin <Guillaume@artefact.tk>

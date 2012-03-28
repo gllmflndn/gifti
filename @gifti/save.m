@@ -2,17 +2,16 @@ function save(this,filename,encoding)
 % Save GIfTI object in a GIfTI format file
 % FORMAT save(this,filename)
 % this      - GIfTI object
-% filename  - name of GIfTI file that will be created
+% filename  - name of GIfTI file to be created [Default: 'untitled.gii']
 % encoding  - optional argument to specify encoding format, among
 %             ASCII, Base64Binary, GZipBase64Binary, ExternalFileBinary,
-%             Collada (.dae), IDTF (.idtf).
+%             Collada (.dae), IDTF (.idtf). [Default: 'GZipBase64Binary']
 %__________________________________________________________________________
 % Copyright (C) 2008 Wellcome Trust Centre for Neuroimaging
 
 % Guillaume Flandin
-% $Id: save.m 4022 2010-07-28 12:50:20Z guillaume $
+% $Id: save.m 4612 2012-01-08 11:54:26Z guillaume $
 
-error(nargchk(1,3,nargin));
 
 % Check filename and file format
 %--------------------------------------------------------------------------
@@ -155,9 +154,15 @@ if isempty(this.label)
     fprintf(fid,'/>\n');
 else
     fprintf(fid,'>\n');
-    for i=1:length(this.label)
-        fprintf(fid,'%s<Label Index="%"><![CDATA[%s]]></Label>\n',o(2),...
-            this.label.index(i), this.label.name{i});
+    for i=1:length(this.label.name)
+        if ~all(isnan(this.label.rgba(i,:)))
+            label_rgba = sprintf(' Red="%f" Green="%f" Blue="%f" Alpha="%f"',...
+                this.label.rgba(i,:));
+        else
+            label_rgba = '';
+        end
+        fprintf(fid,'%s<Label Key="%d"%s><![CDATA[%s]]></Label>\n',o(2),...
+            this.label.key(i), label_rgba, this.label.name{i});
     end
     fprintf(fid,'%s</LabelTable>\n',o(1));
 end
@@ -172,8 +177,14 @@ for i=1:length(this.data)
     fn = sort(fieldnames(this.data{i}.attributes));
     oo = repmat({o(5) '\n'},length(fn),1); oo{1} = '  '; oo{end} = '';
     for j=1:length(fn)
+        if strcmp(fn{j},'ExternalFileName')
+            [p,f,e] = fileparts(this.data{i}.attributes.(fn{j}));
+            attval = [f e];
+        else
+            attval = this.data{i}.attributes.(fn{j});
+        end
         fprintf(fid,'%s%s="%s"%s',oo{j,1},...
-            fn{j},this.data{i}.attributes.(fn{j}),sprintf(oo{j,2}));
+                fn{j},attval,sprintf(oo{j,2}));
     end
     fprintf(fid,'>\n');
     
@@ -223,6 +234,10 @@ for i=1:length(this.data)
             % uses native machine format
         case 'ExternalFileBinary'
             extfilename = this.data{i}.attributes.ExternalFileName;
+            dat = this.data{i}.data;
+            if isa(dat,'file_array')
+                dat = subsref(dat,substruct('()',repmat({':'},1,numel(dat.dim))));
+            end
             if ~def.offset
                 fide = fopen(extfilename,'w'); % uses native machine format
             else
@@ -232,7 +247,7 @@ for i=1:length(this.data)
                 error('Unable to write file %s: permission denied.',extfilename);
             end
             fseek(fide,0,1);
-            fwrite(fide,this.data{i}.data,tp.class);
+            fwrite(fide,dat,tp.class);
             def.offset = ftell(fide);
             fclose(fide);
         otherwise
