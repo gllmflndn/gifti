@@ -1,7 +1,7 @@
- GIfTI - a MATLAB GIfTI Library (v1.2)
+ GIfTI - a MATLAB GIfTI Library (v1.3)
  =====================================
 
- Copyright (C) 2008-2012 Guillaume Flandin <Guillaume@artefact.tk>
+ Copyright (C) 2008-2013 Guillaume Flandin <Guillaume@artefact.tk>
  http://www.artefact.tk/software/matlab/gifti/
 
  This MATLAB class allows to handle GIfTI Geometry file format from the 
@@ -22,7 +22,7 @@
  here, so you don't need to install them separately.
 
  This library is also part of SPM:
-   SPM8: http://www.fil.ion.ucl.ac.uk/spm/software/spm8/
+   SPM: http://www.fil.ion.ucl.ac.uk/spm/
 
  INSTALLATION
  ============
@@ -77,4 +77,4 @@
  -------------------------------------------------------------------------------
  MATLAB is a Registered Trademark of The Mathworks, Inc.
  
- Copyright (C) 2008-2012 Guillaume Flandin <Guillaume@artefact.tk>
+ Copyright (C) 2008-2013 Guillaume Flandin <Guillaume@artefact.tk>

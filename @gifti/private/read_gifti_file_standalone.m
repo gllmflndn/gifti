@@ -1,4 +1,4 @@
-function this = read_gifti_file(filename, this)
+function this = read_gifti_file_standalone(filename, this)
 % Low level reader of GIfTI 1.0 files
 % FORMAT this = read_gifti_file(filename, this)
 % filename    - XML GIfTI filename
@@ -7,7 +7,7 @@ function this = read_gifti_file(filename, this)
 % Copyright (C) 2008 Wellcome Trust Centre for Neuroimaging
 
 % Guillaume Flandin
-% $Id: read_gifti_file.m 4612 2012-01-08 11:54:26Z guillaume $
+% $Id: read_gifti_file_standalone.m 5101 2012-12-07 18:23:20Z guillaume $
 
 % Import XML-based GIfTI file
 %--------------------------------------------------------------------------
@@ -146,7 +146,7 @@ catch
 end
     
 [unused,unused,mach] = fopen(1);
-sb = @deal; %inline('x');
+sb = @(x) x;
 try
     if (strcmp(s.Endian,'LittleEndian') && ~isempty(strmatch('ieee-be',mach))) ...
         || (strcmp(s.Endian,'BigEndian') && ~isempty(strmatch('ieee-le',mach)))
@@ -181,7 +181,7 @@ switch s.Encoding
             fclose(fid);
         else
             d = file_array(s.ExternalFileName, s.Dim, tp.class, ...
-                str2double(s.ExternalFileOffset),1,0,'ro');
+                str2double(s.ExternalFileOffset),1,0,'rw');
         end
         
     otherwise
