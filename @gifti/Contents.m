@@ -16,13 +16,13 @@
 %   XMLTree, by Guillaume Flandin:
 %      http://www.artefact.tk/software/matlab/xml/
 %__________________________________________________________________________
-% Copyright (C) 2008 Wellcome Trust Centre for Neuroimaging
+% Copyright (C) 2008-2014 Wellcome Trust Centre for Neuroimaging
 
 % Guillaume Flandin
 % $Id: Contents.m 2076 2008-09-10 12:34:08Z guillaume $
 
 % GIfTI file format for MATLAB (The Mathworks, Inc.).
-% Copyright (C) 2008 Wellcome Trust Centre for Neuroimaging
+% Copyright (C) 2008-2014 Wellcome Trust Centre for Neuroimaging
 %
 % This program is free software; you can redistribute it and/or
 % modify it under the terms of the GNU General Public License

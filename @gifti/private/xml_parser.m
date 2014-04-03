@@ -13,13 +13,13 @@ function tree = xml_parser(xmlstr)
 % A description of the tree structure provided in output is detailed in 
 % the header of this m-file.
 %_______________________________________________________________________
-% Copyright (C) 2002-2008  http://www.artefact.tk/
+% Copyright (C) 2002-2011  http://www.artefact.tk/
 
-% Guillaume Flandin <guillaume@artefact.tk>
-% $Id: xml_parser.m 1460 2008-04-21 17:43:18Z guillaume $
+% Guillaume Flandin
+% $Id: xml_parser.m 4460 2011-09-05 14:52:16Z guillaume $
 
 % XML Processor for MATLAB (The Mathworks, Inc.).
-% Copyright (C) 2002-2008 Guillaume Flandin <Guillaume@artefact.tk>
+% Copyright (C) 2002-2011 Guillaume Flandin <Guillaume@artefact.tk>
 %
 % This program is free software; you can redistribute it and/or
 % modify it under the terms of the GNU General Public License
@@ -301,8 +301,8 @@ function all = attribution(str)
     while 1,
         eq = xml_findstr(str,'=',1,1);
         if isempty(str) || isempty(eq), return; end
-        id = xml_findstr(str,'"',1,1);       % should also look for ''''
-        nextid = xml_findstr(str,'"',id+1,1);% rather than only '"'
+        id = sort([xml_findstr(str,'"',1,1),xml_findstr(str,'''',1,1)]); id=id(1);
+        nextid = sort([xml_findstr(str,'"',id+1,1),xml_findstr(str,'''',id+1,1)]);nextid=nextid(1);
         nbattr = nbattr + 1;
         all{nbattr}.key = strip(str(1:(eq-1)));
         all{nbattr}.val = entity(str((id+1):(nextid-1)));
