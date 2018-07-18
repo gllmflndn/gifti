@@ -7,7 +7,7 @@ function this = read_gifti_file_standalone(filename, this)
 % Copyright (C) 2008 Wellcome Trust Centre for Neuroimaging
 
 % Guillaume Flandin
-% $Id: read_gifti_file_standalone.m 6404 2015-04-13 14:29:53Z guillaume $
+% $Id: read_gifti_file.m 7366 2018-07-03 16:02:11Z guillaume $
 
 % Import XML-based GIfTI file
 %--------------------------------------------------------------------------
@@ -122,9 +122,24 @@ for i=1:length(c)
         case 'CoordinateSystemTransformMatrix'
             s(1).space(end+1) = gifti_Space(t,c(i));
         case 'Data'
-            s(1).data         = gifti_Data(t,c(i),s(1).attributes);
+            if isfield(s(1).attributes,'Dim') && isequal(s(1).attributes.Dim,[0 0])
+                warning('Ignoring empty DataArray');
+                s(1).data     = [];
+            else
+                s(1).data     = gifti_Data(t,c(i),s(1).attributes);
+            end
         otherwise
             error('[GIFTI] Unknown DataArray element "%s".',xml_get(t,c(i),'name'));
+    end
+end
+
+if strcmp(s.attributes.Intent,'NIFTI_INTENT_POINTSET')
+    if isempty(s.space)
+        warning('Missing "CoordinateSystemTransformMatrix": assuming I.');
+        s.space = struct(...
+            'DataSpace','NIFTI_XFORM_UNKNOWN',...
+            'TransformedSpace','NIFTI_XFORM_UNKNOWN',...
+            'MatrixData',eye(4));
     end
 end
 

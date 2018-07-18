@@ -4,12 +4,13 @@ function saveas(this,filename,format)
 % this      - GIfTI object
 % filename  - name of file to be created [Default: 'untitled.vtk']
 % format    - optional argument to specify encoding format, among
-%             VTK (.vtk,.vtp), Collada (.dae), IDTF (.idtf). [Default: VTK]
+%             VTK (.vtk,.vtp), Collada (.dae), IDTF (.idtf), Wavefront OBJ
+%             (.obj), JavaScript (.js), JSON (.json) [Default: VTK]
 %__________________________________________________________________________
 % Copyright (C) 2008 Wellcome Trust Centre for Neuroimaging
 
 % Guillaume Flandin
-% $Id$
+% $Id: saveas.m 7373 2018-07-09 16:57:21Z guillaume $
 
 
 % Check filename and file format
@@ -18,6 +19,12 @@ ext = '.vtk';
 if nargin == 1
     filename = ['untitled' ext];
 else
+    if nargin == 3 && strcmpi(format,'js')
+        ext = '.js';
+    end
+    if nargin == 3 && strcmpi(format,'json')
+        ext = '.json';
+    end
     if nargin == 3 && strcmpi(format,'collada')
         ext = '.dae';
     end
@@ -27,6 +34,10 @@ else
     if nargin == 3 && strncmpi(format,'vtk',3)
         format = lower(format(5:end));
         ext = '.vtk';
+    end
+    if nargin == 3 && strncmpi(format,'obj',3)
+        format = lower(format(5:end));
+        ext = '.obj';
     end
     [p,f,e] = fileparts(filename);
     if strcmpi(e,'.gii')
@@ -46,6 +57,8 @@ end
 s = struct(this);
 
 switch ext
+    case {'.js','.json'}
+        save_js(s,filename);
     case '.dae'
         save_dae(s,filename);
     case '.idtf'
@@ -53,8 +66,74 @@ switch ext
     case {'.vtk','.vtp'}
         if nargin < 3, format = 'legacy-ascii'; end
         mvtk_write(s,filename,format);
+    case '.obj'
+        save_obj(s,filename);
     otherwise
         error('Unknown file format.');
+end
+
+
+%==========================================================================
+% function save_js(s,filename)
+%==========================================================================
+function save_js(s,filename)
+
+% Vertices & faces
+%--------------------------------------------------------------------------
+trace = struct(...
+    'type','mesh3d',...
+    'x',s.vertices(:,1),...
+    'y',s.vertices(:,2),...
+    'z',s.vertices(:,3),...
+    'i',s.faces(:,1)-1,...
+    'j',s.faces(:,2)-1,...
+    'k',s.faces(:,3)-1);
+if isfield(s,'cdata') && ~isempty(s.cdata)
+    if size(s.cdata,2) == 1
+        trace.intensity = s.cdata(:,1);
+    elseif size(s.cdata,2) == 3
+        trace.vertexcolor = cell(1,size(trace.x,1));
+        for i=1:numel(trace.vertexcolor)
+            trace.vertexcolor{i} = sprintf('rgb(%d,%d,%d)',floor(s.cdata(i,:)*255));
+        end
+    end
+end
+data = {trace};
+
+%-Save as JS variable or JSON file
+%--------------------------------------------------------------------------
+if filename(end) == 's' % JS
+    if exist('jsonencode','builtin')
+        data = jsonencode(data);
+    else
+        data = jsonwrite(data);
+    end
+    fid = fopen(filename,'wt');
+    if fid == -1
+        error('Unable to write file %s: permission denied.',filename);
+    end
+    fprintf(fid,'/*\n * JavaScript file saved by %s\n */\n\n','SPM'); % spm('Version')
+    fprintf(fid,'/*\n  <!DOCTYPE html><html><head><meta charset="utf-8"/>\n');
+    fprintf(fid,'  <script src="%s"></script>\n','https://cdn.plot.ly/plotly-latest.min.js');
+    fprintf(fid,'  </head><body>\n');
+    fprintf(fid,'  <div id="%s" style="height: %dpx;width: %dpx;"></div>\n','plotly',650,800);
+    fprintf(fid,'  <script type="text/javascript">\n*/\n');
+    fprintf(fid,'var data=%s;\n',data);
+    fprintf(fid,'/*\n  </script>\n');
+    fprintf(fid,'  <script type="text/javascript">Plotly.plot("%s", data, {}, {});</script>\n','plotly');
+    fprintf(fid,'  </body></html>\n*/\n');
+    fclose(fid);
+else % JSON
+    if exist('jsonencode','builtin')
+        fid = fopen(filename,'wt');
+        if fid == -1
+            error('Unable to write file %s: permission denied.',filename);
+        end
+        fprintf(fid,'%s',jsonencode(struct('data',{data},'layout',struct())));
+        fclose(fid);
+    else
+        jsonwrite(filename,struct('data',{data},'layout',struct()),struct('indent',' '));
+    end
 end
 
 
@@ -359,6 +438,29 @@ for i=1:numel(s)
     fprintf(fid,'%s}\n',o(1));
     fprintf(fid,'}\n');
 end
+
+% Close file
+%--------------------------------------------------------------------------
+fclose(fid);
+
+
+%==========================================================================
+% function save_obj(s,filename)
+%==========================================================================
+function save_obj(s,filename)
+
+% Open file for writing
+%--------------------------------------------------------------------------
+fid = fopen(filename,'wt');
+if fid == -1
+    error('Unable to write file %s: permission denied.',filename);
+end
+
+% Vertices & faces
+%--------------------------------------------------------------------------
+fprintf(fid,'# Wavefront OBJ file saved by %s\n','SPM'); % spm('Version')
+fprintf(fid,'v %f %f %f\n',s.vertices');
+fprintf(fid,'f %d %d %d\n',s.faces');
 
 % Close file
 %--------------------------------------------------------------------------
