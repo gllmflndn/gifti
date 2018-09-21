@@ -8,7 +8,7 @@ function this = gifti(varargin)
 % Copyright (C) 2008 Wellcome Trust Centre for Neuroimaging
 
 % Guillaume Flandin
-% $Id: gifti.m 7366 2018-07-03 16:02:11Z guillaume $
+% $Id: gifti.m 7399 2018-08-16 12:04:14Z guillaume $
 
 switch nargin
     
@@ -41,7 +41,7 @@ switch nargin
         elseif ishandle(varargin{1})
             this = struct('vertices',get(varargin{1},'Vertices'), ...
                           'faces',   get(varargin{1},'Faces'));
-            if ~isempty(get(varargin{1},'FaceVertexCData'));
+            if ~isempty(get(varargin{1},'FaceVertexCData'))
                   this.cdata = get(varargin{1},'FaceVertexCData');
             end
             this = gifti(this);
@@ -78,7 +78,7 @@ switch nargin
                 end
             elseif ismember(lower(e),{'.asc','.srf','.mgh','.pial',...
                     '.white','.inflated','.nofix','.orig','.smoothwm',...
-                    '.sphere','.reg','.surf'})
+                    '.sphere','.reg','.surf','.curv','.area','.sulc'})
                 this = read_freesurfer_file(varargin{1});
                 this = gifti(this);
             elseif strcmpi(e,'.vtk')
@@ -92,6 +92,9 @@ switch nargin
                 this = gifti(this);
             elseif strcmpi(e,'.stl')
                 this = stl_read(varargin{1});
+                this = gifti(this);
+            elseif strcmpi(e,'.mz3')
+                this = mz3_read(varargin{1});
                 this = gifti(this);
             else
                 this = read_gifti_file_standalone(varargin{1},giftistruct);

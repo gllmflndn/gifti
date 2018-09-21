@@ -1,4 +1,4 @@
- GIfTI - a MATLAB GIfTI Library (v1.7)
+ GIfTI - a MATLAB GIfTI Library (v1.8)
  =====================================
  
  https://www.artefact.tk/software/matlab/gifti/
