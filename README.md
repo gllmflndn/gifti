@@ -1,4 +1,4 @@
- GIfTI - a MATLAB GIfTI Library (v1.8)
+ GIfTI - a MATLAB GIfTI Library (v1.9)
  =====================================
  
  https://www.artefact.tk/software/matlab/gifti/
@@ -85,4 +85,4 @@
  -------------------------------------------------------------------------------
  MATLAB is a Registered Trademark of The Mathworks, Inc.
  
- Copyright (C) 2008-2018 Guillaume Flandin <Guillaume@artefact.tk>
+ Copyright (C) 2008-2019 Guillaume Flandin <Guillaume@artefact.tk>
