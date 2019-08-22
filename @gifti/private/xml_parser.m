@@ -419,11 +419,3 @@ function str = entity(str)
 function str = erode(str)
     if ~isempty(str) && str(1)==' ', str(1)=''; end;
     if ~isempty(str) && str(end)==' ', str(end)=''; end;
-
-%-----------------------------------------------------------------------
-function k = xml_findstr(s,p,i,n)
-    % K = XML_FINDSTR(TEXT,PATTERN,INDICE,NBOCCUR)
-    % k = regexp(s(i:end),p,'once') + i - 1;
-    j = strfind(s,p);
-    k = j(j>=i);
-    if ~isempty(k), k = k(1:min(n,length(k))); end

@@ -7,7 +7,7 @@
 
 include Makefile.var
 
-SPMMEX = zstream.$(SUF)
+SPMMEX = zstream.$(SUF) xml_findstr.$(SUF)
 
 ifeq (mex,$(SUF))
   export CFLAGS = $(shell $(MEX) -p CFLAGS) -std=c99
