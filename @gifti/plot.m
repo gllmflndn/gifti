@@ -59,7 +59,7 @@ axes(ax);
 camlight;
 camlight(-80,-10);
 lighting(ax,'gouraud');
-if strcmp(spm_check_version,'matlab')
+if ~exist('OCTAVE_VERSION','builtin')
     cameratoolbar(h);
 end
 

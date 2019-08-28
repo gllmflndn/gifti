@@ -23,8 +23,19 @@
  Note that these tools are already included in the GIfTI library provided
  here, so you don't need to install them separately.
 
- This library is also part of SPM:
-   * SPM: https://www.fil.ion.ucl.ac.uk/spm/
+ There are import facilities from [FreeSurfer](https://surfer.nmr.mgh.harvard.edu/fswiki/FileFormats),
+ [VTK](http://www.vtk.org/), [Wavefront OBJ](https://www.wikipedia.org/wiki/Wavefront_.obj_file),
+ [Stanford PLY](https://www.wikipedia.org/wiki/PLY_%28file_format%29),
+ [STL](https://www.wikipedia.org/wiki/STL_%28file_format%29) and
+ [MZ3](https://github.com/neurolabusc/surf-ice/tree/master/mz3) file formats.
+
+ There are export facilities to [VTK](http://www.vtk.org/),
+ [Collada](https://www.khronos.org/collada/),
+ [IDTF](http://www.meshlab.net/),
+ [Wavefront OBJ](https://www.wikipedia.org/wiki/Wavefront_.obj_file) and
+ [JS/JSON](https://plot.ly/javascript/) file formats.
+
+ This library is also part of [SPM]](https://www.fil.ion.ucl.ac.uk/spm/).
 
  INSTALLATION
  ------------
@@ -40,7 +51,7 @@
   addpath /home/login/Documents/MATLAB/gifti
 ```
  
- The library relies on a number of C-MEX files (zstream, base64, xml_parser).
+ The library relies on a number of C-MEX files (`zstream`, `base64`, `xml_parser`).
  Compiled versions for 64 bit MATLAB on Windows, Linux and Mac are provided
  but they can easily be compiled by yourself otherwise, see Makefile.
   
@@ -79,3 +90,5 @@
     
    save(g,'mri.surf.gii','Base64Binary');
 ```
+
+ See also: [export to Plotly](https://gllmflndn.github.io/gifti/).
