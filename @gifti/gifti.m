@@ -8,7 +8,7 @@ function this = gifti(varargin)
 % Copyright (C) 2008 Wellcome Trust Centre for Neuroimaging
 
 % Guillaume Flandin
-% $Id: gifti.m 7471 2018-11-02 11:14:39Z guillaume $
+% $Id: gifti.m 7621 2019-06-20 16:58:59Z guillaume $
 
 switch nargin
     
@@ -30,6 +30,11 @@ switch nargin
                     this = subsasgn(this,...
                         struct('type','.','subs',ff{ia(i)}),...
                         varargin{1}.(c{i}));
+                end
+                if isfield(varargin{1},'mat')
+                    this = subsasgn(this,...
+                        struct('type','.','subs','mat'),...
+                        varargin{1}.mat);
                 end
             elseif isempty(setxor(fieldnames(varargin{1}),...
                     {'metadata','label','data'}))
@@ -79,7 +84,7 @@ switch nargin
             elseif ismember(lower(e),{'.asc','.srf','.mgh','.mgz','.pial',...
                     '.white','.inflated','.nofix','.orig','.smoothwm',...
                     '.sphere','.reg','.surf','.curv','.area','.sulc'})
-                this = read_freesurfer_file(varargin{1});
+                this = freesurfer_read(varargin{1});
                 this = gifti(this);
             elseif strcmpi(e,'.vtk')
                 this = mvtk_read(varargin{1});
@@ -97,7 +102,7 @@ switch nargin
                 this = mz3_read(varargin{1});
                 this = gifti(this);
             else
-                this = read_gifti_file_standalone(varargin{1},giftistruct);
+                this = gifti_read(varargin{1},giftistruct);
                 this = class(this,'gifti');
             end
             

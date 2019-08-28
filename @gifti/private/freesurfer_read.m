@@ -1,4 +1,4 @@
-function this = read_freesurfer_file(filename)
+function this = freesurfer_read(filename)
 % Low level reader of FreeSurfer file
 % FORMAT this = read_freesurfer_file(filename)
 % filename    - FreeSurfer file

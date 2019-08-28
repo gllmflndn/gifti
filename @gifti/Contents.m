@@ -9,24 +9,23 @@
 %                  https://www.fil.ion.ucl.ac.uk/spm/
 %
 % It relies on external libraries:
-%   Base64, by Peter J. Acklam:
-%      http://home.online.no/~pjacklam/
+%   yxml, by Yoran Heling:
+%      https://dev.yorhel.nl/yxml
+%   Base64, by polfosol:
+%      https://stackoverflow.com/a/37109258
 %   miniz, by Rich Geldreich:
 %      https://github.com/richgel999/miniz
-%   dzip, by Michael Kleder:
-%      https://www.mathworks.com/matlabcentral/fileexchange/8899
-%   XMLTree, mVTK and JSONio, by Guillaume Flandin:
-%      https://www.artefact.tk/software/matlab/xml/
+%   mVTK and JSONio, by Guillaume Flandin:
 %      https://www.artefact.tk/software/matlab/mvtk/
 %      https://www.artefact.tk/software/matlab/jsonio/
 %__________________________________________________________________________
-% Copyright (C) 2008-2018 Wellcome Trust Centre for Neuroimaging
+% Copyright (C) 2008-2019 Wellcome Trust Centre for Neuroimaging
 
 % Guillaume Flandin
 % $Id: Contents.m 7379 2018-07-25 09:11:24Z guillaume $
 
 % GIfTI library for MATLAB
-% Copyright (C) 2008-2018 Wellcome Trust Centre for Neuroimaging
+% Copyright (C) 2008-2019 Wellcome Trust Centre for Neuroimaging
 %
 % This program is free software; you can redistribute it and/or
 % modify it under the terms of the GNU General Public License

@@ -30,7 +30,7 @@
 SHELL          = /bin/sh
 MAKE           = make
 MEXBIN         = mex
-MEXOPTS        = -O -largeArrayDims CFLAGS='$$CFLAGS -Wall -Wextra'
+MEXOPTS        = -O -largeArrayDims
 MEXEND         = 
 MOSUF          = o # mex output object suffix
 UNAME          = uname
@@ -55,7 +55,7 @@ ifndef SUF
   endif
   ##### Windows #####
   ifeq (MINGW32,$(word 1,$(subst _, ,$(PLATFORM)))) # MSC
-    override PLATFORM = windows # used in Makefile re. AR
+    override PLATFORM = windows
     ifeq (x86,$(PROCESSOR_ARCHITECTURE))
       SUF      = mexw32
     else

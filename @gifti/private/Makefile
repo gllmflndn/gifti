@@ -7,7 +7,7 @@
 
 include Makefile.var
 
-SPMMEX = zstream.$(SUF) xml_findstr.$(SUF)
+SPMMEX = zstream.$(SUF) xml_parser.$(SUF) base64.$(SUF)
 
 ifeq (mex,$(SUF))
   export CFLAGS = $(shell $(MEX) -p CFLAGS) -std=c99
@@ -36,3 +36,6 @@ tarball: all
 
 %.$(SUF) : %.c
 	$(MEX) $< $(MEXEND)
+
+xml_parser.$(SUF): xml_parser.c yxml.c yxml.h
+	$(MEX) $< yxml.c $(MEXEND)

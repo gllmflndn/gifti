@@ -1,4 +1,4 @@
- GIfTI - a MATLAB GIfTI Library (v1.9)
+ GIfTI - a MATLAB GIfTI Library (v2.0)
  =====================================
  
  https://www.artefact.tk/software/matlab/gifti/
@@ -9,14 +9,12 @@
    * NIfTI: http://nifti.nimh.nih.gov/
 
  It relies on external libraries:
-   * Base64, by Peter J. Acklam:
-     http://home.online.no/~pjacklam/
+   * yxml, by Yoran Heling:
+     https://dev.yorhel.nl/yxml
+   * Base64, by polfosol:
+     https://stackoverflow.com/a/37109258
    * miniz, by Rich Geldreich:
      https://github.com/richgel999/miniz
-   * dzip, by Michael Kleder:
-     https://www.mathworks.com/matlabcentral/fileexchange/8899
-   * XMLTree, by Guillaume Flandin:
-     https://www.artefact.tk/software/matlab/xml/
    * mVTK, by Guillaume Flandin:
      https://www.artefact.tk/software/matlab/mvtk/
    * JSONio, by Guillaume Flandin:
@@ -32,7 +30,7 @@
  ------------
  
  MATLAB 7.1 (R14SP3) or above is required to use most of the features of
- this toolbox.
+ this toolbox. GNU Octave is also supported.
  
  This library takes advantage of MATLAB Object-Oriented facilities and all
  the code is embedded in a `@gifti` class. To install it, all you need is to 
@@ -42,9 +40,9 @@
   addpath /home/login/Documents/MATLAB/gifti
 ```
  
- The handling of gzipped data requires a C-MEX file to be compiled, see
- `@gifti/private/zstream.c`. A Java alternative will be used otherwise,
- in which case MATLAB should not be started with the `'-nojvm'` option
+ The library relies on a number of C-MEX files (zstream, base64, xml_parser).
+ Compiled versions for 64 bit MATLAB on Windows, Linux and Mac are provided
+ but they can easily be compiled by yourself otherwise, see Makefile.
   
  TUTORIAL
  --------
@@ -81,8 +79,3 @@
     
    save(g,'mri.surf.gii','Base64Binary');
 ```
- 
- -------------------------------------------------------------------------------
- MATLAB is a Registered Trademark of The Mathworks, Inc.
- 
- Copyright (C) 2008-2019 Guillaume Flandin <Guillaume@artefact.tk>

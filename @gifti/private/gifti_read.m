@@ -1,4 +1,4 @@
-function this = read_gifti_file_standalone(filename, this)
+function this = gifti_read(filename, this)
 % Low level reader of GIfTI 1.0 files
 % FORMAT this = read_gifti_file(filename, this)
 % filename    - XML GIfTI filename
@@ -11,22 +11,15 @@ function this = read_gifti_file_standalone(filename, this)
 
 % Import XML-based GIfTI file
 %--------------------------------------------------------------------------
-try
-    fid = fopen(filename,'rt');
-    xmlstr = fread(fid,'*char')';
-    fclose(fid);
-    t = xml_parser(xmlstr);
-catch
-    error('[GIFTI] Loading of XML file %s failed.', filename);
-end
+t = xml_parser(filename);
 
 % Root element of a GIFTI file
 %--------------------------------------------------------------------------
-if ~strcmp(xml_get(t,xml_root(t),'name'),'GIFTI')
+if ~strcmp(xml_get(t,xml_root(t),'value'),'GIFTI')
     error('[GIFTI] %s is not a GIFTI 1.0 file.', filename);
 end
-attr = cell2mat(xml_attributes(t,'get',xml_root(t)));
-attr = cell2struct({attr.val},strrep({attr.key},':','___'),2);
+attr = xml_attributes(t,'get',xml_root(t));
+attr = cell2struct({attr.value},strrep({attr.key},':','___'),2);
 if ~all(ismember({'Version','NumberOfDataArrays'},fieldnames(attr)))
     error('[GIFTI] Missing mandatory attributes for GIFTI root element.');
 end
@@ -39,7 +32,7 @@ nbData = str2double(attr.NumberOfDataArrays);
 %--------------------------------------------------------------------------
 uid = xml_children(t,xml_root(t));
 for i=1:length(uid)
-    switch xml_get(t,uid(i),'name')
+    switch xml_get(t,uid(i),'value')
         case 'MetaData'
             this.metadata    = gifti_MetaData(t,uid(i));
         case 'LabelTable'
@@ -47,7 +40,7 @@ for i=1:length(uid)
         case 'DataArray'
             this.data{end+1} = gifti_DataArray(t,uid(i),filename);
         otherwise
-            warning('[GIFTI] Unknown element "%s": ignored.',xml_get(t,uid(i),'name'));
+            warning('[GIFTI] Unknown element "%s": ignored.',xml_get(t,uid(i),'value'));
     end
 end
 
@@ -61,29 +54,29 @@ s = struct('name',{}, 'value',{});
 c = xml_children(t,uid);
 for i=1:length(c)
     for j=xml_children(t,c(i))
-        s(i).(lower(xml_get(t,j,'name'))) = xml_get(t,xml_children(t,j),'value');
+        s(i).(lower(xml_get(t,j,'value'))) = xml_get(t,xml_children(t,j),'value');
     end
 end
 
 %==========================================================================
 function s = gifti_LabelTable(t,uid)
-s = struct('name',{}, 'key',[], 'rgba',[]);
+s = struct('value',{}, 'key',[], 'rgba',[]);
 c = xml_children(t,uid);
 for i=1:length(c)
     a = xml_attributes(t,'get',c(i));
     s(1).rgba(i,1:4) = NaN;
     for j=1:numel(a)
-        switch lower(a{j}.key)
+        switch lower(a(j).key)
             case {'key','index'}
-                s(1).key(i)    = str2double(a{j}.val);
+                s(1).key(i)    = str2double(a(j).value);
             case 'red'
-                s(1).rgba(i,1) = str2double(a{j}.val);
+                s(1).rgba(i,1) = str2double(a(j).value);
             case 'green'
-                s(1).rgba(i,2) = str2double(a{j}.val);
+                s(1).rgba(i,2) = str2double(a(j).value);
             case 'blue'
-                s(1).rgba(i,3) = str2double(a{j}.val);
+                s(1).rgba(i,3) = str2double(a(j).value);
             case 'alpha'
-                s(1).rgba(i,4) = str2double(a{j}.val);
+                s(1).rgba(i,4) = str2double(a(j).value);
             otherwise
         end
     end
@@ -99,8 +92,8 @@ s = struct(...
            'space',      {} ...
           );
 
-attr = cell2mat(xml_attributes(t,'get',uid));
-s(1).attributes = cell2struct({attr.val},{attr.key},2);
+attr = xml_attributes(t,'get',uid);
+s(1).attributes = cell2struct({attr.value},{attr.key},2);
 s(1).attributes.Dim = [];
 for i=1:str2double(s(1).attributes.Dimensionality)
     f = sprintf('Dim%d',i-1);
@@ -116,7 +109,7 @@ end
     
 c = xml_children(t,uid);
 for i=1:length(c)
-    switch xml_get(t,c(i),'name')
+    switch xml_get(t,c(i),'value')
         case 'MetaData'
             s(1).metadata     = gifti_MetaData(t,c(i));
         case 'CoordinateSystemTransformMatrix'
@@ -129,7 +122,7 @@ for i=1:length(c)
                 s(1).data     = gifti_Data(t,c(i),s(1).attributes);
             end
         otherwise
-            error('[GIFTI] Unknown DataArray element "%s".',xml_get(t,c(i),'name'));
+            error('[GIFTI] Unknown DataArray element "%s".',xml_get(t,c(i),'value'));
     end
 end
 
@@ -147,7 +140,7 @@ end
 function s = gifti_Space(t,uid)
 s = struct('DataSpace','', 'TransformedSpace','', 'MatrixData',[]);
 for i=xml_children(t,uid)
-    s.(xml_get(t,i,'name')) = xml_get(t,xml_children(t,i),'value');
+    s.(xml_get(t,i,'value')) = xml_get(t,xml_children(t,i),'value');
 end
 s.MatrixData = reshape(str2num(s.MatrixData),4,4)';
 
@@ -163,9 +156,9 @@ end
 [unused,unused,mach] = fopen(1);
 sb = @(x) x;
 try
-    if (strcmp(s.Endian,'LittleEndian') && ~isempty(strmatch('ieee-be',mach))) ...
-        || (strcmp(s.Endian,'BigEndian') && ~isempty(strmatch('ieee-le',mach)))
-        sb = @swapbyte;
+    if (strcmp(s.Endian,'LittleEndian') && strncmp('ieee-be',mach,7)) ...
+        || (strcmp(s.Endian,'BigEndian') && strncpm('ieee-le',mach,7))
+        sb = @swapbytes;
     end
 catch
     % Byte Order can be absent if encoding is ASCII, assume native otherwise
@@ -176,10 +169,10 @@ switch s.Encoding
         d = feval(tp.conv,sscanf(xml_get(t,xml_children(t,uid),'value'),tp.format));
 
     case 'Base64Binary'
-        d = typecast(sb(base64decode(xml_get(t,xml_children(t,uid),'value'))), tp.cast);
+        d = sb(typecast(base64('decode',uint8(xml_get(t,xml_children(t,uid),'value'))),tp.cast));
 
     case 'GZipBase64Binary'
-        d = typecast(zstream('D',sb(base64decode(xml_get(t,xml_children(t,uid),'value')))), tp.cast);
+        d = sb(typecast(zstream('D',base64('decode',uint8(xml_get(t,xml_children(t,uid),'value')))),tp.cast));
 
     case 'ExternalFileBinary'
         [p,f,e] = fileparts(s.ExternalFileName);
@@ -226,8 +219,8 @@ end
 
 %--------------------------------------------------------------------------
 function child = xml_children(tree,uid)
-if strcmp(tree{uid}.type,'element')
-    child = tree{uid}.contents;
+if strcmp(tree(uid).type,'element')
+    child = tree(uid).children;
 else
     child = [];
 end
@@ -236,7 +229,7 @@ end
 function value = xml_get(tree,uid,parameter)
 if isempty(uid), value = {}; return; end
 try
-    value = tree{uid}.(parameter);
+    value = tree(uid).(parameter);
 catch
     error(sprintf('[XML] Parameter %s not found.',parameter));
 end
@@ -244,8 +237,8 @@ end
 %--------------------------------------------------------------------------
 function varargout = xml_attributes(tree,method,uid)
 if ~strcmpi(method,'get'), error('[XML] Unknown attributes method.'); end
-if isempty(tree{uid}.attributes)
-    varargout{1} = {};
+if isempty(tree(uid).attributes)
+    varargout{1} = [];
 else
-    varargout{1} = tree{uid}.attributes;
+    varargout{1} = tree(uid).attributes;
 end
