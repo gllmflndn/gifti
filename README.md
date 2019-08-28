@@ -9,16 +9,11 @@
    * NIfTI: http://nifti.nimh.nih.gov/
 
  It relies on external libraries:
-   * yxml, by Yoran Heling:
-     https://dev.yorhel.nl/yxml
-   * Base64, by polfosol:
-     https://stackoverflow.com/a/37109258
-   * miniz, by Rich Geldreich:
-     https://github.com/richgel999/miniz
-   * mVTK, by Guillaume Flandin:
-     https://www.artefact.tk/software/matlab/mvtk/
-   * JSONio, by Guillaume Flandin:
-     https://www.artefact.tk/software/matlab/jsonio/
+   * [yxml](https://dev.yorhel.nl/yxml), by Yoran Heling
+   * [Base64](https://stackoverflow.com/a/37109258), by polfosol
+   * [miniz](https://github.com/richgel999/miniz), by Rich Geldreich
+   * [mVTK](https://www.artefact.tk/software/matlab/mvtk/), by Guillaume Flandin
+   * [JSONio](https://www.artefact.tk/software/matlab/jsonio/), by Guillaume Flandin
 
  Note that these tools are already included in the GIfTI library provided
  here, so you don't need to install them separately.
@@ -35,7 +30,7 @@
  [Wavefront OBJ](https://www.wikipedia.org/wiki/Wavefront_.obj_file) and
  [JS/JSON](https://plot.ly/javascript/) file formats.
 
- This library is also part of [SPM]](https://www.fil.ion.ucl.ac.uk/spm/).
+ This library is also part of [SPM](https://www.fil.ion.ucl.ac.uk/spm/).
 
  INSTALLATION
  ------------
@@ -59,8 +54,7 @@
  --------
  
  In the following, we use the files contained in `BV_GIFTI.tar.gz`
- (BrainVISA examples), available from the NITRC website: 
-   http://www.nitrc.org/frs/?group_id=75&release_id=123
+ (BrainVISA examples), available from the [NITRC website](http://www.nitrc.org/frs/?group_id=75&release_id=123): 
    
 ```matlab
    % Read the GIfTI surface file
