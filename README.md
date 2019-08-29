@@ -5,8 +5,8 @@
 
  This MATLAB class allows to handle GIfTI Geometry file format from the 
  Neuroimaging Informatics Technology Initiative.
-   * GIfTI: http://www.nitrc.org/projects/gifti/
-   * NIfTI: http://nifti.nimh.nih.gov/
+   * GIfTI: https://www.nitrc.org/projects/gifti/
+   * NIfTI: https://nifti.nimh.nih.gov/
 
  It relies on external libraries:
    * [yxml](https://dev.yorhel.nl/yxml), by Yoran Heling
@@ -19,12 +19,12 @@
  here, so you don't need to install them separately.
 
  There are import facilities from [FreeSurfer](https://surfer.nmr.mgh.harvard.edu/fswiki/FileFormats),
- [VTK](http://www.vtk.org/), [Wavefront OBJ](https://www.wikipedia.org/wiki/Wavefront_.obj_file),
+ [VTK](https://vtk.org/), [Wavefront OBJ](https://www.wikipedia.org/wiki/Wavefront_.obj_file),
  [Stanford PLY](https://www.wikipedia.org/wiki/PLY_%28file_format%29),
  [STL](https://www.wikipedia.org/wiki/STL_%28file_format%29) and
  [MZ3](https://github.com/neurolabusc/surf-ice/tree/master/mz3) file formats.
 
- There are export facilities to [VTK](http://www.vtk.org/),
+ There are export facilities to [VTK](https://vtk.org/),
  [Collada](https://www.khronos.org/collada/),
  [IDTF](http://www.meshlab.net/),
  [Wavefront OBJ](https://www.wikipedia.org/wiki/Wavefront_.obj_file) and
@@ -54,7 +54,7 @@
  --------
  
  In the following, we use the files contained in `BV_GIFTI.tar.gz`
- (BrainVISA examples), available from the [NITRC website](http://www.nitrc.org/frs/?group_id=75&release_id=123): 
+ (BrainVISA examples), available from the [NITRC website](https://www.nitrc.org/frs/?group_id=75&release_id=123): 
    
 ```matlab
    % Read the GIfTI surface file
