@@ -9,7 +9,11 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
-    - name: Run a one-line script
-      run: echo Hello, world!
     - name: Install GNU Octave
       run: sudo apt-get install octave liboctave-dev
+    - name: Display GNU Octave version
+      run: octave --version
+    -name: Compile MEX files
+      run: pwd;ls;make -C gifti/@gifti/private PLATFORM=octave
+    -name: Run tests
+      run: octave --no-gui --no-window-system --silent --eval "disp ('test');"
