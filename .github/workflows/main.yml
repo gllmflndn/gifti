@@ -17,6 +17,6 @@ jobs:
       run: |
         pwd
         ls
-        make -C gifti/@gifti/private PLATFORM=octave
+        make -C gifti/\@gifti/private PLATFORM=octave
     -name: Run tests
       run: octave --no-gui --no-window-system --silent --eval "disp ('test');"
