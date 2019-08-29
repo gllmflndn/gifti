@@ -12,4 +12,4 @@ jobs:
     - name: Run a one-line script
       run: echo Hello, world!
     - name: Install GNU Octave
-      run: apt-get install octave liboctave-dev
+      run: sudo apt-get install octave liboctave-dev
