@@ -14,6 +14,9 @@ jobs:
     - name: Display GNU Octave version
       run: octave --version
     -name: Compile MEX files
-      run: pwd;ls;make -C gifti/@gifti/private PLATFORM=octave
+      run: |
+        pwd
+        ls
+        make -C gifti/@gifti/private PLATFORM=octave
     -name: Run tests
       run: octave --no-gui --no-window-system --silent --eval "disp ('test');"
