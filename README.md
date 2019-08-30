@@ -48,7 +48,7 @@
  
  The library relies on a number of C-MEX files (`zstream`, `base64`, `xml_parser`).
  Compiled versions for 64 bit MATLAB on Windows, Linux and Mac are provided
- but they can easily be compiled by yourself otherwise, see Makefile.
+ but they can easily be compiled by yourself otherwise, see `@gifti/private/Makefile`.
   
  TUTORIAL
  --------
@@ -69,7 +69,7 @@
    figure; plot(g,gg);
 ```
    
- In a similar way, a gifti object can be created from scratch and save to a file:
+ In a similar way, a gifti object can be created from scratch and saved to a file:
    
  ```matlab
    load mri
