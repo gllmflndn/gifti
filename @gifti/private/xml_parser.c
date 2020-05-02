@@ -137,7 +137,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
         continue;
       case YXML_CONTENT:
         if (XML_START == NULL && doc[0] != 0x20 && doc[0] != 0x09 && doc[0] != 0x0a && doc[0] != 0x0d)
-          XML_START = doc;
+          XML_START = XML_CURR = doc;
         else
           XML_CURR = doc;
         /* see x->data */
