@@ -1,3 +1,5 @@
+* text=auto
+
 *.m text diff=matlab
 *.c text
 *.h text
