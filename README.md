@@ -1,7 +1,5 @@
  GIfTI - a MATLAB GIfTI Library (v2.0)
  =====================================
- 
- https://www.artefact.tk/software/matlab/gifti/
 
  This MATLAB class allows to handle GIfTI Geometry file format from the 
  Neuroimaging Informatics Technology Initiative.
