@@ -199,7 +199,12 @@ end
 if length(s.Dim) == 1, s.Dim(end+1) = 1; end
 switch s.ArrayIndexingOrder
     case 'RowMajorOrder'
-        d = permute(reshape(d,fliplr(s.Dim)),length(s.Dim):-1:1);
+        if length(s.Dim) == 2 && any(s.Dim==1)
+            % special case that does not require permuting
+            d = reshape(d,s.Dim);
+        else
+            d = permute(reshape(d,fliplr(s.Dim)),length(s.Dim):-1:1);
+        end
     case 'ColumnMajorOrder'
         d = reshape(d,s.Dim);
     otherwise

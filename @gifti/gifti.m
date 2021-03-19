@@ -83,7 +83,7 @@ switch nargin
                 end
             elseif ismember(lower(e),{'.asc','.srf','.mgh','.mgz','.pial',...
                     '.white','.inflated','.nofix','.orig','.smoothwm',...
-                    '.sphere','.reg','.surf','.curv','.area','.sulc'})
+                    '.sphere','.reg','.surf','.curv','.area','.sulc','.annot'})
                 this = freesurfer_read(varargin{1});
                 this = gifti(this);
             elseif strcmpi(e,'.vtk')
@@ -94,6 +94,9 @@ switch nargin
                 this = gifti(this);
             elseif strcmpi(e,'.ply')
                 this = ply_read(varargin{1});
+                this = gifti(this);
+            elseif strcmpi(e,'.off')
+                this = off_read(varargin{1});
                 this = gifti(this);
             elseif strcmpi(e,'.stl')
                 this = stl_read(varargin{1});
