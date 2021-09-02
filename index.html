@@ -25,7 +25,7 @@
           js.src = filename;
           var data = {}, layout = {title: ""}, options = {};
           js.onload = function () {
-            Plotly.plot("plotly", data, layout, options);
+            Plotly.newPlot("plotly", data, layout, options);
           }
           firstScript.parentNode.insertBefore(js, firstScript);
         } else {
@@ -37,7 +37,7 @@
             if (fig.options === "undefined") {
               fig.options = {};
             }
-            Plotly.plot("plotly", fig.data, fig.layout, fig.options);
+            Plotly.newPlot("plotly", fig.data, fig.layout, fig.options);
           });
         }
       }
