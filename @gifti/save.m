@@ -220,10 +220,10 @@ for i=1:length(this.data)
         case 'ASCII'
             fprintf(fid, [tp.format ' '], this.data{i}.data);
         case 'Base64Binary'
-            fprintf(fid,base64encode(typecast(this.data{i}.data(:),'uint8')));
+            fprintf(fid,base64('encode',typecast(this.data{i}.data(:),'uint8')));
             % uses native machine format
         case 'GZipBase64Binary'
-            fprintf(fid,base64encode(zstream('C',typecast(this.data{i}.data(:),'uint8'))));
+            fprintf(fid,base64('encode',zstream('C',typecast(this.data{i}.data(:),'uint8'))));
             % uses native machine format
         case 'ExternalFileBinary'
             extfilename = this.data{i}.attributes.ExternalFileName;
