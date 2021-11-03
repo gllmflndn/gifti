@@ -1,5 +1,5 @@
 function [a, b] = isintent(this,intent)
-% Correspondance between fieldnames and NIfTI intent codes
+% Correspondence between fieldnames and NIfTI intent codes
 % FORMAT ind = isintent(this,intent)
 % this    -  GIfTI object
 % intent  -  fieldnames
