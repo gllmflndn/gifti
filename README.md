@@ -9,8 +9,7 @@ It relies on external libraries:
   * [yxml](https://dev.yorhel.nl/yxml), by Yoran Heling
   * [Base64](https://stackoverflow.com/a/37109258), by polfosol
   * [miniz](https://github.com/richgel999/miniz), by Rich Geldreich
-  * [mVTK](https://www.artefact.tk/software/matlab/mvtk/), by Guillaume Flandin
-  * [JSONio](https://www.artefact.tk/software/matlab/jsonio/), by Guillaume Flandin
+  * [JSONio](https://github.com/gllmflndn/JSONio), by Guillaume Flandin
 
 Note that these tools are already included in the GIfTI library provided
 here, so you don't need to install them separately.

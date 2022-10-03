@@ -11,7 +11,7 @@ function tree = xml_parser(xml)
 %   https://yorhel.nl/
 %
 % A pure MATLAB implementation of a similar XML parser is available at:
-%   https://www.artefact.tk/software/matlab/xml/
+%   https://github.com/gllmflndn/xmltree
 %__________________________________________________________________________
 %
 % The tree representation of the XML document is stores as a struct array

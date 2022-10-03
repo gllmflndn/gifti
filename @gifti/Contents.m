@@ -15,9 +15,8 @@
 %      https://stackoverflow.com/a/37109258
 %   miniz, by Rich Geldreich:
 %      https://github.com/richgel999/miniz
-%   mVTK and JSONio, by Guillaume Flandin:
-%      https://www.artefact.tk/software/matlab/mvtk/
-%      https://www.artefact.tk/software/matlab/jsonio/
+%   JSONio, by Guillaume Flandin:
+%      https://github.com/gllmflndn/JSONio
 %__________________________________________________________________________
 % Copyright (C) 2008-2019 Wellcome Trust Centre for Neuroimaging
 
