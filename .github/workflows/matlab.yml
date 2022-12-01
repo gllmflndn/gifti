@@ -15,7 +15,13 @@ jobs:
         uses: matlab-actions/setup-matlab@v1
         with:
           release: ${{matrix.version}}
-      - name: Run commands
+      - name: Run tests with existing MEX files
+        uses: matlab-actions/run-command@v1
+        with:
+          command: addpath(pwd); cd tests; results = gifti_runtests; assert(all(~[results.Failed]));
+      - name: Compile GIfTI MEX files
+        run: make -C @gifti/private
+      - name: Run tests with newly compiled MEX files
         uses: matlab-actions/run-command@v1
         with:
           command: addpath(pwd); cd tests; results = gifti_runtests; assert(all(~[results.Failed]));
