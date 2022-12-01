@@ -1,0 +1,21 @@
+name: Run MATLAB Tests
+on: [push]
+jobs:
+  matlab-test:
+    name: Run MATLAB Tests
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ["R2020a", "R2020b", "R2021a", "R2021b", "R2022a", "R2022b"]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+      - name: Set up MATLAB
+        uses: matlab-actions/setup-matlab@v1
+        with:
+          release: ${{matrix.version}}
+      - name: Run commands
+        uses: matlab-actions/run-command@v1
+        with:
+          command: addpath(pwd); cd tests; results = gifti_runtests; assert(all(~[results.Failed]));
