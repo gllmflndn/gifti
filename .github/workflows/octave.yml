@@ -48,3 +48,16 @@ jobs:
 
       - name: Run tests
         run: octave --no-gui --no-window-system --silent --eval "cd tests; results = gifti_runtests; assert(all(~[results.Failed]))"
+
+  macos:
+    runs-on: macos-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Install GNU Octave
+        run: |
+          brew tap octave-app/octave-app
+          brew install --cask octave-app
+          octave --version
+          
