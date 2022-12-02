@@ -1,5 +1,9 @@
 # GIfTI library for MATLAB/Octave
 
+![GitHub](https://img.shields.io/github/license/gllmflndn/gifti)
+[![MATLAB](https://github.com/gllmflndn/gifti/actions/workflows/matlab.yml/badge.svg)](https://github.com/gllmflndn/gifti/actions)
+[![Octave](https://github.com/gllmflndn/gifti/actions/workflows/octave.yml/badge.svg)](https://github.com/gllmflndn/gifti/actions)
+
 This GIfTI library allows to handle the GIfTI Geometry file format from the Neuroimaging
 Informatics Technology Initiative (NIfTI) using a MATLAB/Octave class:
   * GIfTI: https://www.nitrc.org/projects/gifti/
