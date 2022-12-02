@@ -1,4 +1,4 @@
-name: Run MATLAB Tests
+name: MATLAB Tests
 on:
   push:
     branches:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 jobs:
   matlab-test:
-    name: Run MATLAB Tests
+    name: MATLAB Tests
     strategy:
       fail-fast: false
       matrix:

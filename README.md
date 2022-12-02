@@ -66,10 +66,10 @@ figure; plot(g);
 figure; plot(g,c);
 ```
    
-In a similar way, a gifti object can be created from scratch and saved to a file:
+In a similar way, a `gifti` object can be created from an extracted isosurface from volume data and saved to a file:
    
 ```matlab
-load mri
+load mri % an example dataset available in MATLAB
 D = squeeze(D);
 Ds = smooth3(D);
 g = gifti(isosurface(Ds,5))
@@ -82,4 +82,6 @@ set(h,'SpecularColorReflectance',0,'SpecularExponent',50)
 save(g,'mri.surf.gii','Base64Binary');
 ```
 
-See also: [export to Plotly](https://gllmflndn.github.io/gifti/).
+## SEE ALSO
+
+[Export to Plotly](https://gllmflndn.github.io/gifti/).

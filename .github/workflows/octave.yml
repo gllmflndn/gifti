@@ -1,4 +1,4 @@
-name: Run Octave Tests
+name: Octave Tests
 
 on:
   push:
