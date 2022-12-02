@@ -37,7 +37,7 @@ jobs:
 
       - name: Install GNU Octave
         run: |
-          choco install octave
+          choco install octave.portable
           octave --version
           
       - name: Compile GIfTI MEX files
