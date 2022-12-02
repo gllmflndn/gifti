@@ -1,5 +1,10 @@
 name: Run MATLAB Tests
-on: [push]
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+  workflow_dispatch:
 jobs:
   matlab-test:
     name: Run MATLAB Tests
@@ -37,3 +42,11 @@ jobs:
         uses: matlab-actions/run-command@v1
         with:
           command: addpath(pwd); cd tests; results = gifti_runtests; assert(all(~[results.Failed]));
+      - name: Get MEX extension
+        run: echo "MEX=$(mexext)" >> $GITHUB_ENV
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: gifti-${{env.MEX}}-${{matrix.version}}
+          path: ./**/*.${{env.MEX}}
+          retention-days: 15
