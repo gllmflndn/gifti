@@ -42,11 +42,15 @@ jobs:
         uses: matlab-actions/run-command@v1
         with:
           command: addpath(pwd); cd tests; results = gifti_runtests; assert(all(~[results.Failed]));
-      - name: Get MEX extension
-        run: echo "MEX=$(mexext)" >> $GITHUB_ENV
+      - name: Get MEX extension on Linux/macOS
+        if: runner.os != 'Windows'
+        run: echo "MEXEXT=$(mexext)" >> $GITHUB_ENV
+      - name: Get MEX extension on Windows
+        if: runner.os == 'Windows'
+        run: echo "MEXEXT=$(mexext.bat)" >> $env:GITHUB_ENV
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: gifti-${{env.MEX}}-${{matrix.version}}
-          path: ./**/*.${{env.MEX}}
-          retention-days: 15
+          name: gifti-${{env.MEXEXT}}-${{runner.os}}-${{matrix.version}}
+          path: ./**/*.${{env.MEXEXT}}
+          retention-days: 5
