@@ -3,8 +3,7 @@
   <head>
     <meta charset="utf-8"/>
     <title>GIfTI mesh</title>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
-    <script src="https://cdn.plot.ly/plotly-2.16.3.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.18.2.min.js"></script>
   </head>
   <body>
     <div id="plotly" style="height: 650px;width: 800px;"></div>
@@ -29,16 +28,21 @@
           }
           firstScript.parentNode.insertBefore(js, firstScript);
         } else {
-          d3.json(filename, function(err, fig) {
-            if (err) alert("Could not read data!");
-            if (fig.layout === "undefined") {
-              fig.layout = {title: ""};
-            }
-            if (fig.options === "undefined") {
-              fig.options = {};
-            }
-            Plotly.newPlot("plotly", fig.data, fig.layout, fig.options);
-          });
+          fetch(filename)
+            .then(fig => fig.json())
+            .then(function (fig) {
+              console.log(fig);
+              if (fig.layout === "undefined") {
+                fig.layout = { title: "" };
+              }
+              if (fig.options === "undefined") {
+                fig.options = {};
+              }
+              Plotly.newPlot("plotly", fig.data, fig.layout, fig.options);
+            })
+            .catch(function () {
+              alert("Could not read data!");
+            });
         }
       }
     </script>
