@@ -6,10 +6,10 @@ function [a, b] = isintent(this,intent)
 % a       -  indices of found intent(s)
 % b       -  indices of dataarrays of found intent(s)
 %__________________________________________________________________________
-% Copyright (C) 2008 Wellcome Trust Centre for Neuroimaging
 
 % Guillaume Flandin
-% $Id: isintent.m 6345 2015-02-20 12:25:50Z guillaume $
+% Copyright (C) 2008-2023 Wellcome Centre for Human Neuroimaging
+
 
 a = [];
 b = [];

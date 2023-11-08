@@ -28,10 +28,9 @@ function tree = xml_parser(xml)
 %
 % Processing instructions and comments are not reported.
 %__________________________________________________________________________
-% Copyright (C) 2019 Wellcome Trust Centre for Neuroimaging
 
 % Guillaume Flandin
-% $Id$
+% Copyright (C) 2008-2023 Wellcome Centre for Human Neuroimaging
 
 
 error('A compiled version of "xml_parser" is not available for your platform.');

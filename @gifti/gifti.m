@@ -5,10 +5,10 @@ function this = gifti(varargin)
 %                 http://www.nitrc.org/projects/gifti/
 %                      http://nifti.nimh.nih.gov/
 %__________________________________________________________________________
-% Copyright (C) 2008 Wellcome Trust Centre for Neuroimaging
 
 % Guillaume Flandin
-% $Id: gifti.m 7621 2019-06-20 16:58:59Z guillaume $
+% Copyright (C) 2008-2023 Wellcome Centre for Human Neuroimaging
+
 
 switch nargin
     
