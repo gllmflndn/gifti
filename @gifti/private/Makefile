@@ -1,15 +1,13 @@
 #!/usr/bin/env make -f
 # GIfTI Makefile
 #
-# Copyright (C) 2015 Wellcome Trust Centre for Neuroimaging
-#
-# $Id: Makefile 6704 2016-01-29 17:23:13Z guillaume $
+# Copyright (C) 2008-2023 Wellcome Centre for Human Neuroimaging
 
 include Makefile.var
 
-SPMMEX = zstream.$(SUF) xml_parser.$(SUF) base64.$(SUF)
+SPMMEX = zstream.$(MEXEXT) xml_parser.$(MEXEXT) base64.$(MEXEXT)
 
-ifeq (mex,$(SUF))
+ifeq (mex,$(MEXEXT))
   export CFLAGS = $(shell $(MEX) -p CFLAGS) -std=c99
 else
   ifeq (windows,$(PLATFORM))
@@ -34,8 +32,8 @@ install:
 tarball: all
 	$(TAR) cf spm_mex.tar $(SPMMEX)
 
-%.$(SUF) : %.c
+%.$(MEXEXT) : %.c
 	$(MEX) $< $(MEXEND)
 
-xml_parser.$(SUF): xml_parser.c yxml.c yxml.h
+xml_parser.$(MEXEXT): xml_parser.c yxml.c yxml.h
 	$(MEX) $< yxml.c $(MEXEND)

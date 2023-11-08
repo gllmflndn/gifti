@@ -21,8 +21,8 @@ switch nargin
             this = varargin{1};
             
         elseif isstruct(varargin{1})
-            f       = {'faces', 'face', 'tri' 'vertices', 'vert', 'pnt', 'cdata', 'indices'};
-            ff      = {'faces', 'faces', 'faces', 'vertices', 'vertices', 'vertices', 'cdata', 'indices'};
+            f       = {'faces', 'face', 'tri' 'vertices', 'vert', 'pnt', 'pos', 'cdata', 'indices'};
+            ff      = {'faces', 'faces', 'faces', 'vertices', 'vertices', 'vertices', 'vertices', 'cdata', 'indices'};
             [c, ia] = intersect(f,fieldnames(varargin{1}));
             if ~isempty(c)
                 this = gifti;

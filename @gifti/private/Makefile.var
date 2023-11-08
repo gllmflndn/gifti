@@ -41,25 +41,25 @@ MOVE           = mv -f
 TAR            = tar
 ZIP            = gzip -f
 
-ifndef SUF
+ifndef MEXEXT
   ifndef PLATFORM
     PLATFORM   = $(shell $(UNAME))
   endif
   ##### Linux #####
   ifeq (Linux,$(PLATFORM))
-    SUF        = mexa64
+    MEXEXT     = mexa64
   endif
   ##### MacOS #####
   ifeq (Darwin,$(PLATFORM))
-    SUF        = mexmaci64
+    MEXEXT     = mexmaci64
   endif
   ##### Windows #####
   ifeq (MINGW32,$(word 1,$(subst _, ,$(PLATFORM)))) # MSC
     override PLATFORM = windows
     ifeq (x86,$(PROCESSOR_ARCHITECTURE))
-      SUF      = mexw32
+      MEXEXT   = mexw32
     else
-      SUF      = mexw64
+      MEXEXT   = mexw64
     endif
     MEXBIN     = cmd /c "mex.bat
     MEXOPTS   += -DSPM_WIN32
@@ -68,7 +68,7 @@ ifndef SUF
     AR         = lib.exe /out:
   endif
   ifeq (MSYS,$(word 1,$(subst _, ,$(PLATFORM)))) # GCC
-    SUF        = mexw64
+    MEXEXT     = mexw64
     MEXOPTS   += -DSPM_WIN32
     MOSUF      = obj
   endif
@@ -76,11 +76,11 @@ ifndef SUF
   ifeq (octave,$(PLATFORM))
     MEXBIN     = mkoctfile
     MEXOPTS    = --mex
-    SUF        = mex
+    MEXEXT     = mex
     override PLATFORM = $(shell $(UNAME))
   endif
   #### Otherwise ####
-  ifndef SUF
+  ifndef MEXEXT
     $(error Unknowm platform $(PLATFORM))
   endif
 endif
