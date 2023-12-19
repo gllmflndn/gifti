@@ -236,7 +236,7 @@ end
 
 %--------------------------------------------------------------------------
 function value = xml_get(tree,uid,parameter)
-if isempty(uid), value = {}; return; end
+if isempty(uid), value = ''; return; end
 try
     value = tree(uid).(parameter);
 catch
