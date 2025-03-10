@@ -17,7 +17,7 @@ jobs:
       - name: Install GNU Octave
         run: |
           sudo apt-get update && sudo apt-get install -y \
-            octave liboctave-dev && \
+            octave octave-dev && \
           octave --version
 
       - name: Compile GIfTI MEX files
